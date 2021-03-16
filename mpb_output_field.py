@@ -3,7 +3,7 @@ from meep import mpb
 import numpy as np
 import h5py
 
-num_bands = 8
+num_bands = 6
 
 k_points = [
             mp.Vector3(0.5, 0.5),  # M
@@ -23,7 +23,7 @@ geometry = [mp.Block(size=mp.Vector3(d, d, mp.inf), material=crystal_material)]
 
 geometry_lattice = mp.Lattice(size=mp.Vector3(1, 1))
 
-resolution = 8
+resolution = 16
 
 ms = mpb.ModeSolver(num_bands=num_bands,
                     default_material=mp.Medium(epsilon=2.25),
@@ -70,7 +70,7 @@ def get_fields(ms, band):
 
     hf.close
 
-ms.run(mpb.fix_efield_phase, mpb.fix_hfield_phase, mpb.fix_dfield_phase, mpb.fix_bfield_phase, get_fields)
+ms.run_tm(mpb.fix_efield_phase, mpb.fix_hfield_phase, mpb.fix_dfield_phase, mpb.fix_bfield_phase, get_fields)
 
 banddata = ms.all_freqs
 
